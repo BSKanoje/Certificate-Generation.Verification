@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | CertifyX{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-3">Welcome, {{ company.company_name }} 👋</h1>
+
+            {% if not subscription %}
+                <p class="lead">You're currently not using any plan.</p>
+            {% else %}
+                <p class="lead">You're currently subscribed to the {{ subscription.plan.name }} plan.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if subscription %}
+
+    <!-- Plan Details Block -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h4>Plan Details</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Current Plan:</strong> {{ subscription.plan.name }}</p>
+                    <p><strong>Plan Price:</strong> ₹{{ subscription.plan.price }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificate Usage Block -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h4>Certificate Usage</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Certificates Used:</strong> {{ subscription.certificates_used }} / {{ subscription.plan.certificate_limit }}</p>
+                    <p><strong>Remaining Certificates:</strong> {{ remaining_certificates }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Certificate Usage & Plan Validity -->
+    <div class="row">
+        
+
+        <!-- Plan Validity Block -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h4>Plan Validity</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Plan Expiry Date:</strong> {{ subscription.expiry_date }}</p>
+                    <p><strong>Days Left:</strong> {{ days_left }} day{{ days_left|pluralize }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h4>Status</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Payment Status:</strong> {{ subscription.payment_status }}</p>
+                    <p><strong>Subscription Status:</strong> 
+                        {% if subscription.is_subscription_active %}
+                            <span class="text-success font-weight-bold">Active</span>
+                        {% else %}
+                            <span class="text-danger font-weight-bold">Expired</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-warning text-center">
+        <h4>No active subscription found.</h4>
+        <p>Please choose a plan below to get started.</p>
+        <a href="{% url 'plans' %}" class="btn btn-success mt-3">View Plans</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

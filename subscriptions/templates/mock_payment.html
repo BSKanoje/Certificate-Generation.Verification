@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mock Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+        }
+        .payment-box {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+        }
+        .plan-details {
+            margin-bottom: 20px;
+        }
+        .plan-details p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #38a169;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #2f855a;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-box">
+        <h1>Mock Payment Gateway</h1>
+        <div class="plan-details">
+            <p><strong>Plan Name:</strong> {{ plan.name }}</p>
+            <p><strong>Certificate Limit:</strong> {{ plan.certificate_limit }}</p>
+            <p><strong>Template Limit:</strong> {{ plan.template_limit }}</p>
+            <p><strong>Price:</strong> ₹{{ plan.price }}</p>
+            <p><strong>Duration:</strong> 30 days</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn">Simulate Payment</button>
+        </form>
+    </div>
+</body>
+</html>

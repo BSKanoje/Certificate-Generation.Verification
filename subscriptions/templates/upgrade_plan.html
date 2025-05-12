@@ -1,0 +1,146 @@
+{% extends 'base.html' %}  <!-- Extend base.html -->
+
+{% block content %}
+    <header>
+        <h1 class="text-white text-center">Upgrade Your Subscription</h1>
+    </header>
+    
+    <main>
+        {% if messages %}
+            <ul class="alert-messages">
+                {% for message in messages %}
+                    <li class="alert alert-info">
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="info-box">
+            <h3>Current Subscription</h3>
+            <p><strong>Plan:</strong>
+                {% if subscription.plan %}
+                    <span class="plan-name">{{ subscription.plan.name }}</span>
+                {% else %}
+                    <span class="no-plan">No Plan</span>
+                {% endif %}
+            </p>
+            <p><strong>Expiry Date:</strong> <span class="expiry-date">{{ subscription.expiry_date }}</span></p>
+        </div>
+
+        <h3>Select a New Plan</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="plan" class="form-label">Choose a new plan:</label>
+            <select name="plan" id="plan" required class="form-select">
+                {% for plan in plans %}
+                    <option value="{{ plan.id }}">{{ plan.name }} - ₹{{ plan.price }} / month</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn btn-primary">Upgrade</button>
+        </form>
+
+        <p class="back-link"><a href="{% url 'plans' %}">← Back to Plan Details</a></p>
+    </main>
+
+    <style>
+        /* Updated Styles with #00b894 */
+        header {
+            background-color: #00b894; /* Updated to #00b894 */
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h1.text-center {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .alert-messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+
+        .alert-info {
+            background-color: #d0f0d4;
+            border-left: 5px solid #00b894; /* Updated to #00b894 */
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            color: #00b894;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background-color: #e8f5e9;
+            padding: 1.5rem;
+            border-left: 4px solid #00b894; /* Updated to #00b894 */
+            border-radius: 6px;
+            margin-bottom: 2rem;
+        }
+
+        .info-box h3 {
+            color: #00b894; /* Updated to #00b894 */
+            margin-bottom: 1rem;
+        }
+
+        .plan-name {
+            font-weight: bold;
+            color: #008d62; /* A slightly darker green */
+        }
+
+        .no-plan {
+            color: #c62828;
+        }
+
+        .expiry-date {
+            font-style: italic;
+            color: #555;
+        }
+
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 2px solid #00b894; /* Updated to #00b894 */
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background-color: #00b894; /* Updated to #00b894 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #008d62; /* A slightly darker green for hover effect */
+        }
+
+        .back-link {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .back-link a {
+            color: #00b894; /* Updated to #00b894 */
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}

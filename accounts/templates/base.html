@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CertifyX{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #00b894;
+        }
+        .navbar a {
+            color: white !important;
+        }
+        .navbar a:hover {
+            color: #f8f9fa !important;
+        }
+        .navbar .navbar-brand h1 {
+            color: white;
+        }
+        .navbar .navbar-brand .tagline {
+            font-size: 0.9rem;
+            color: white;
+        }
+        .tagline {
+            font-size: 1rem;
+            font-style: italic;
+            color: #f8f9fa;
+        }
+        .navbar-nav .nav-item {
+            margin-right: 20px;
+        }
+        .navbar-nav .nav-item .nav-link {
+            color: #fff;
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #f8f9fa;
+        }
+        .dropdown-menu {
+            background-color: #059b7d;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-width: 160px;
+        }
+        .dropdown-item {
+            color: #00b894 !important;
+            padding: 8px 16px;
+        }
+        .dropdown-item:hover {
+            background-color: #00b894;
+            color: #008f72 !important;
+        }
+        footer {
+            background-color: #00b894;
+            padding: 10px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 1rem;
+        }
+    </style>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <h1>CertifyX</h1>
+            <p class="tagline">Where Certificates Are Always Verified, Always Secure</p>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/generate-certificate">Generate Certificates</a></li>
+                <li class="nav-item"><a class="nav-link" href="/manage-templates">Manage Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="/candidate-management">Candidate Management</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reports">Reports</a></li>
+                <li class="nav-item"><a class="nav-link" href="/plans">Plans</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile-settings">Edit Profile</a>
+                        <a class="dropdown-item" href="/reset-password">Reset Password</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container mt-5 content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 CertifyX. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

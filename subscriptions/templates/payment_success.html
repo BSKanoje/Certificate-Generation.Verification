@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .success-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #38a169;
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #4a5568;
+            font-size: 18px;
+        }
+
+        .plan-info {
+            text-align: left;
+            margin-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        .plan-info p {
+            margin: 5px 0;
+        }
+
+        .btn {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3182ce;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <div class="success-icon">✅</div>
+        <h1>Payment Successful!</h1>
+        <p>Your subscription is now active. Thank you for your purchase.</p>
+
+        <div class="plan-info">
+            <h3>Plan Details</h3>
+            <p><strong>Plan Name:</strong> {{ plan.name }}</p>
+            <p><strong>Certificate Limit:</strong> {{ plan.certificate_limit }}</p>
+            <p><strong>Template Limit:</strong> {{ plan.template_limit }}</p>
+            <p><strong>Price:</strong> ₹{{ plan.price }}</p>
+            <p><strong>Duration:</strong> 30 days</p>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn">Return to Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+
+    {% if subscription %}
+    <div class="alert alert-info text-center">
+        <h4>Your Current Plan: <strong>{{ subscription.plan.name }}</strong></h4>
+        <p>Certificates Used: {{ subscription.certificates_used }} / {{ subscription.plan.certificate_limit }}</p>
+        <p>Expires on: {{ subscription.expiry_date }}</p>
+        {% if subscription.is_subscription_active %}
+            <p>Your plan is active. 
+                <!-- Link to Renew subscription -->
+                <a href="{% url 'renew' subscription.id %}">Renew</a> 
+                or 
+                <!-- Link to Upgrade subscription -->
+                <a href="{% url 'upgrade_plan' subscription.id 'Elite Plan' %}">Upgrade</a> your plan.
+
+            </p>
+        {% else %}
+            <p>Your plan has expired. Please 
+                <!-- Link to Renew subscription -->
+                <a href="{% url 'renew' subscription.id %}">renew</a>.
+            </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <h2 class="mb-4 text-center">Choose a Plan That Fits Your Needs</h2>
+    <div class="row">
+        {% for plan in plans %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success">{{ plan.name }}</h5>
+                    <p class="card-text">
+                        <strong>Certificates:</strong> {{ plan.certificate_limit }}<br>
+                        <strong>Templates:</strong> {{ plan.template_limit }}<br>
+                        <strong>Price:</strong> ₹{{ plan.price }}
+                    </p>
+                    <a href="{% url 'mock_payment' plan.id %}" class="btn btn-primary btn-block">Choose Plan</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
