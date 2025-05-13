@@ -10,16 +10,13 @@
         <p>Expires on: {{ subscription.expiry_date }}</p>
         {% if subscription.is_subscription_active %}
             <p>Your plan is active. 
-                <!-- Link to Renew subscription -->
                 <a href="{% url 'renew' subscription.id %}">Renew</a> 
                 or 
-                <!-- Link to Upgrade subscription -->
                 <a href="{% url 'upgrade_plan' subscription.id 'Elite Plan' %}">Upgrade</a> your plan.
 
             </p>
         {% else %}
             <p>Your plan has expired. Please 
-                <!-- Link to Renew subscription -->
                 <a href="{% url 'renew' subscription.id %}">renew</a>.
             </p>
         {% endif %}

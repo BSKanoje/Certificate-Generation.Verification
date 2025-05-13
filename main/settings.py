@@ -125,18 +125,14 @@ USE_TZ = True
 
 import os
 
-# Static files (CSS, JavaScript, images)
 STATIC_URL = '/static/'
 
-# Directories where Django will look for static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'main/static'),  # Points to the static folder inside your app directory
+    os.path.join(BASE_DIR, 'main/static'),  
 ]
 
-# Optional: If you want to collect all static files in a single folder for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Media files (files like images uploaded by users)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

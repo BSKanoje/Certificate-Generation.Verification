@@ -8,6 +8,11 @@ from django.contrib.auth import update_session_auth_hash
 from datetime import date
 from subscriptions.models import CompanySubscription, PricingPlan
 
+
+def about(request):
+    return render(request, 'about.html')
+
+
 def home_view(request):
     user = request.user
 
@@ -33,12 +38,6 @@ def home_view(request):
     return render(request, 'home.html', context)
 
 
-
-# Create your views here.
-def about(request):
-    return render(request, 'about.html')
-
-
 def register(request):
     if request.method == 'POST':
         company_name = request.POST['company_name']
@@ -58,16 +57,12 @@ def register(request):
             company_name=company_name,
             email=email,
             phone=phone,
-            password=make_password(password)  # securely hash password
+            password=make_password(password) 
         )
         login(request, company)
-        return redirect('home')  # or your dashboard URL
+        return redirect('home')  
 
     return render(request, 'register.html')
-
-
-
-
 
 User = get_user_model()
 
@@ -85,7 +80,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')  # Change to your dashboard/homepage
+            return redirect('home')  
         else:
             messages.error(request, "Invalid credentials")
             return redirect('login')
@@ -98,27 +93,23 @@ def logout_view(request):
     return redirect('/')
 
 
+
 @login_required
 def reset_password(request):
     if request.method == 'POST':
         new_password = request.POST['new_password']
         confirm_password = request.POST['confirm_password']
 
-        # Check if passwords match
         if new_password != confirm_password:
             messages.error(request, "Passwords do not match.")
-            return redirect('reset-password')  # Redirect back to reset page
+            return redirect('reset-password')  
 
-        # Update the user's password
         user = request.user
-        user.set_password(new_password)  # Use set_password to hash the password correctly
+        user.set_password(new_password) 
         user.save()
 
-        # Keep the user logged in after password change
         update_session_auth_hash(request, user)
 
-        # Provide success message
         messages.success(request, "Password updated successfully.")
-        # return redirect('home')  # Redirect to the homepage or desired page
 
     return render(request, 'reset_password.html')

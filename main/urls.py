@@ -35,7 +35,7 @@ urlpatterns = [
     path('pay/<int:plan_id>/', mock_payment, name='mock_payment'),
     path('payment-success/<int:id>/', payment_success, name='payment_success'),
 
-    path('subscriptions/', include('subscriptions.urls')),  # Make sure to add this line
+    path('subscriptions/', include('subscriptions.urls')),
 
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
