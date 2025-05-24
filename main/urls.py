@@ -30,6 +30,8 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('reset-password/', reset_password, name='reset-password'),
 
+    path('profile-settings/', profile_settings, name='profile-settings'), # to update company profile
+
     path('plans/', plans_view, name='plans'),
     path('choose-plan/<int:id>/', choose_plan, name='choose_plan'),
     path('pay/<int:plan_id>/', mock_payment, name='mock_payment'),
