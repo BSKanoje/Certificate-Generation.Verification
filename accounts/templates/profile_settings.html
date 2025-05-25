@@ -1,0 +1,143 @@
+
+{% extends 'base.html' %} 
+
+{% block extra_head %}
+<style>
+    .btn-custom {
+        color: white;
+            background-color: #00b894;
+            border-color: #00b894;
+        }
+        .btn-custom:hover {
+            background-color: #008f72;
+            border-color: #008f72;
+        }
+        .logo-placeholder {
+        width: 100px; 
+        height: 100px; 
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        overflow: hidden; 
+        flex-shrink: 0; 
+    }
+
+.logo-control {
+    font-size: 0; 
+}
+
+.logo-control a,
+.logo-control input,
+.logo-control label {
+    font-size: 1rem;
+    vertical-align: middle; 
+}
+
+.logo-control a {
+    display: none;
+}
+</style>
+{% endblock %}
+
+{% block title %}Profile Settings | CertifyX{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Your Company Profile</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-6" style="margin-bottom: 20px;">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                        <div class="form-group mb-4">
+                            <label for="{{ form.logo.id_for_label }}" class="form-label">Company Logo:</label><br>
+                            {% if company.logo %}
+                            <img src="{{ company.logo.url }}" alt="{{ company.company_name }} Logo" class="img-thumbnail mb-2  logo-placeholder">
+                            <br>
+                            {% else %} 
+                            <p class="logo-placeholder" style="display: flex; align-items: center; justify-content: center;">200 x 200</p>
+                            {% endif %}
+                            {% if form.logo.errors %}
+                            <div class="invalid-feedback d-block">{{ form.logo.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="logo-control">
+                            {{ form.logo }}
+                        </div>
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="{{ form.company_name.id_for_label }}" class="form-label">Company Name:</label>
+                        {{ form.company_name }}
+                        {% if form.company_name.errors %}
+                        <div class="invalid-feedback d-block">{{ form.company_name.errors }}</div>
+                        {% endif %}
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="{{ form.phone.id_for_label }}" class="form-label">Phone Number:</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                        <div class="invalid-feedback d-block">{{ form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+        
+                    <div class="form-group mb-3">
+                        <label for="{{ form.address.id_for_label }}" class="form-label">Address:</label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                        <div class="invalid-feedback d-block">{{ form.address.errors }}</div>
+                        {% endif %}
+                    </div>
+        
+        
+                    <button type="submit" class="btn btn-custom w-100">Save Changes</button>
+                </form>
+            </div>
+
+        <div class="col-md-6">
+            <h3>Subscription Details</h3>
+            {% if subscription %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p><strong>Current Plan:</strong> {{ subscription.plan.name }}</p>
+                    <p><strong>Price:</strong> ₹{{ subscription.plan.price }}</p>
+                    <p><strong>Certificates Used:</strong> {{ subscription.certificates_used }} / {{
+                        subscription.plan.certificate_limit }}</p>
+                    <p><strong>Remaining:</strong> {{ remaining_certificates }}</p>
+                    <p><strong>Expiry Date:</strong> {{ subscription.expiry_date }} ({{ days_left }} days left)</p>
+                    <p><strong>Payment Status:</strong> {{ subscription.payment_status }}</p>
+                    {% if subscription.is_subscription_active %}
+                    <p class="text-success">Status: Active</p>
+                    {% else %}
+                    <p class="text-danger">Status: Expired</p>
+                    {% endif %}
+                    <a href="{% url 'plans' %}" class="btn btn-info btn-sm mt-2">Manage Plans</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-warning">
+                No active subscription found. <a href="{% url 'plans' %}">Choose a plan</a> to get started.
+            </div>
+            {% endif %}
+
+            <hr>
+            <h3>Account Actions</h3>
+            <p><a href="{% url 'reset-password' %}" class="btn btn-warning">Change Password</a></p>
+            <!-- {# You might add links for invoice viewing here later #}
+            <h4>Past Invoices (Coming Soon)</h4>
+            <p>This section will list your past invoices.</p> -->
+        </div>
+    </div>
+</div>
+{% endblock %}

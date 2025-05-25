@@ -125,7 +125,7 @@ def profile_settings(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated successfully!')
-            return redirect('profile_settings')
+            return redirect('profile-settings')
     else:
         form = CompanyProfileUpdateForm(instance=company)
 
@@ -146,4 +146,4 @@ def profile_settings(request):
         'days_left': days_left,
         'remaining_certificates': remaining_certificates,
     }
-    return render(request, 'accounts/profile_settings.html', context)
+    return render(request, 'profile_settings.html', context)
