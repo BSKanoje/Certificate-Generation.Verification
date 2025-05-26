@@ -112,8 +112,7 @@
                 <div class="card-body">
                     <p><strong>Current Plan:</strong> {{ subscription.plan.name }}</p>
                     <p><strong>Price:</strong> ₹{{ subscription.plan.price }}</p>
-                    <p><strong>Certificates Used:</strong> {{ subscription.certificates_used }} / {{
-                        subscription.plan.certificate_limit }}</p>
+                    <p><strong>Certificates Used:</strong> {{ subscription.certificates_used }} / {{ subscription.plan.certificate_limit }}</p>
                     <p><strong>Remaining:</strong> {{ remaining_certificates }}</p>
                     <p><strong>Expiry Date:</strong> {{ subscription.expiry_date }} ({{ days_left }} days left)</p>
                     <p><strong>Payment Status:</strong> {{ subscription.payment_status }}</p>
