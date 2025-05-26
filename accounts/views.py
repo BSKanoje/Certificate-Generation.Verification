@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from datetime import date
 from subscriptions.models import CompanySubscription, PricingPlan
+from .forms import CompanyProfileUpdateForm # Import the form for profile updates
 
 
 def about(request):
@@ -113,3 +114,36 @@ def reset_password(request):
         messages.success(request, "Password updated successfully.")
 
     return render(request, 'reset_password.html')
+
+
+@login_required
+def profile_settings(request):
+    company = request.user 
+
+    if request.method == 'POST':
+        form = CompanyProfileUpdateForm(request.POST, request.FILES, instance=company)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+            return redirect('profile-settings')
+    else:
+        form = CompanyProfileUpdateForm(instance=company)
+
+    # Fetch subscription details to display (Section 8 requirement)
+    try:
+        subscription = CompanySubscription.objects.get(company=company)
+        days_left = (subscription.expiry_date - date.today()).days if subscription.expiry_date else 0
+        remaining_certificates = subscription.remaining_certificates()
+    except CompanySubscription.DoesNotExist:
+        subscription = None
+        days_left = 0
+        remaining_certificates = 0
+
+    context = {
+        'form': form,
+        'company': company,
+        'subscription': subscription,
+        'days_left': days_left,
+        'remaining_certificates': remaining_certificates,
+    }
+    return render(request, 'profile_settings.html', context)
